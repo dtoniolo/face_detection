@@ -1,7 +1,7 @@
 import os
 import sys
 import shutil
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def clean_repo():
@@ -27,13 +27,16 @@ if _version is None:
     sys.exit('Sorry, cannot find version information.')
 
 # Installation
+repository_folder = os.path.realpath(os.path.dirname(__file__))
+parent_package_name = 'ibug'
 config = {
     'name': 'ibug_face_detection',
     'version': _version,
     'description': 'A collection of pretrained face detectors including S3FD and RetinaFace.',
     'author': 'Jie Shen',
     'author_email': 'js1907@imperial.ac.uk',
-    'packages': ['ibug.face_detection'],
+    'packages': ['.'.join([parent_package_name, package]) for package in
+                     find_packages(os.path.join(repository_folder, parent_package_name))],
     'install_requires': ['numpy>=1.16.0', 'scipy>=1.1.0', 'torch>=1.1.0',
                          'torchvision>=0.3.0', 'opencv-python>= 3.4.2'],
     'zip_safe': False
